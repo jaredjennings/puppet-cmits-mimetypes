@@ -26,21 +26,6 @@
 
 
 class mimetypes {
-# This define will help us insert MIME types below. It is only useful in the
-# case where there is a single file extension given for the MIME type.
-    define mimetype($ext) {
-        # mimetype_$name may be more correct but too long to be wieldy.
-        augeas { "mimetype_for_$ext":
-            # incl + lens instead of context "greatly speeds up execution"
-            incl => "/etc/mime.types",
-            lens => "Mimetypes.lns",
-            changes => [
-                "set rules[.='$name'] '$name'",
-                "set rules[.='$name']/rule '$ext'",
-            ],
-        }
-    }
-
 # Office 2007 formats:
 # \url{http://blogs.msdn.com/dmahugh/archive/2006/08/08/692600.aspx}
     $avoxfod = "application/vnd.openxmlformats-officedocument"
@@ -48,7 +33,7 @@ class mimetypes {
     $me12 = "macroEnabled.12"
 
     # indentation style altered to look better in print
-    mimetype {
+    mimetypes::a_mimetype {
 "${avoxfod}.wordprocessingml.document":   ext => "docx";
 "${avoxfod}.wordprocessingml.template":   ext => "dotx";
 "${avoxfod}.presentationml.slideshow":    ext => "ppsx";
